@@ -1,4 +1,4 @@
-package com.example.mypoi.database
+package database
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
@@ -8,7 +8,7 @@ import android.provider.BaseColumns
 
 
 const val DATABASE_VERSION = 1
-const val DATABASE_NAME = "FeedReader.db"
+const val DATABASE_NAME = "MyPOI.db"
 
 
 
@@ -19,20 +19,20 @@ class Database (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
 
 
     private val SQL_CREATE_LOCATIONS =
-    "CREATE TABLE ${location.TABLE_NAME} (" +
+    "CREATE TABLE ${LocationContract.Location.TABLE_NAME} (" +
             "${BaseColumns._ID} INTEGER PRIMARY KEY," +
-            "${location.COLUMN_NAME_TITLE} TEXT," +
-            "${location.COLUMN_NAME_X} TEXT," +
-            "${location.COLUMN_NAME_Y} TEXT," +
-            "${location.COLUMN_NAME_DESCRIPTION} TEXT," +
-            "${location.COLUMN_NAME_CATEGORY} INTEGER)"
+            "${LocationContract.Location.COLUMN_NAME_TITLE} TEXT," +
+            "${LocationContract.Location.COLUMN_NAME_X} TEXT," +
+            "${LocationContract.Location.COLUMN_NAME_Y} TEXT," +
+            "${LocationContract.Location.COLUMN_NAME_DESCRIPTION} TEXT," +
+            "${LocationContract.Location.COLUMN_NAME_CATEGORY} INTEGER)"
 
-    private val SQL_CREATE_CATEGORIES = "CREATE TABLE ${category.TABLE_NAME}(" +
+    private val SQL_CREATE_CATEGORIES = "CREATE TABLE ${LocationContract.Category.TABLE_NAME}(" +
             "${BaseColumns._ID} INTEGER PRIMARY KEY," +
-            "${category.COLUMN_NAME_TITLE} TEXT)"
+            "${LocationContract.Category.COLUMN_NAME_TITLE} TEXT)"
 
-    private val SQL_DELETE_LOCATIONS = "DROP TABLE IF EXISTS ${location.TABLE_NAME}"
-    private val SQL_DELETE_CATEGORIES = "DROP TABLE IF EXISTS ${category.TABLE_NAME}"
+    private val SQL_DELETE_LOCATIONS = "DROP TABLE IF EXISTS ${LocationContract.Location.TABLE_NAME}"
+    private val SQL_DELETE_CATEGORIES = "DROP TABLE IF EXISTS ${LocationContract.Category.TABLE_NAME}"
 
 
     override fun onCreate(db: SQLiteDatabase?) {
@@ -45,6 +45,9 @@ class Database (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
         db?.execSQL(SQL_DELETE_CATEGORIES)
     }
 
+    fun addCategory(){
+
+    }
 
 }
 
