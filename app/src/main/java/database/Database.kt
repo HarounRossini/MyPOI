@@ -1,5 +1,6 @@
 package database
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
@@ -45,7 +46,20 @@ class Database (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
         db?.execSQL(SQL_DELETE_CATEGORIES)
     }
 
-    fun addCategory(){
+    fun addCategory(db: SQLiteDatabase?, newCat: Category){
+        var values = ContentValues()
+        values.put(category.COLUMN_NAME_TITLE, newCat.title)
+        db?.insert(category.TABLE_NAME, null, values)
+    }
+
+    fun addLocation(db: SQLiteDatabase?, newLoc: Location){
+        var values = ContentValues()
+        values.put(location.COLUMN_NAME_CATEGORY, newLoc.category)
+        values.put(location.COLUMN_NAME_TITLE, newLoc.title)
+        values.put(location.COLUMN_NAME_X, newLoc.x)
+        values.put(location.COLUMN_NAME_Y, newLoc.y)
+        values.put(location.COLUMN_NAME_DESCRIPTION, newLoc.description)
+        db?.insert(location.TABLE_NAME, null, values)
 
     }
 
