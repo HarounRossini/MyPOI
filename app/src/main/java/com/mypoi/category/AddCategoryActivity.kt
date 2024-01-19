@@ -1,10 +1,11 @@
-package com.example.mypoi
+package com.mypoi.category
 
 
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import androidx.activity.ComponentActivity
+import com.example.mypoi.R
 import com.example.mypoi.databinding.AddCategoryBinding
 import database.Category
 import database.Database
@@ -26,12 +27,13 @@ class AddCategoryActivity : ComponentActivity() {
             dbHelper.addCategory(writeDb, newCat)
         }
         val cursor = dbHelper.getCategories(readDib)
-        with(cursor) {
+      /*  with(cursor) {
             while (this!!.moveToNext()) {
                 cursor?.getString(cursor.getColumnIndexOrThrow(LocationContract.Category.COLUMN_NAME_TITLE))
                     ?.let { Log.d("dati", it) }
             }
-        }
+        } */
+       // val categoryList = findViewById<>()
     }
 }
 
