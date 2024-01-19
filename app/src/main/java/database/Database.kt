@@ -65,7 +65,7 @@ class Database (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
 
     }
 
-    fun getCategories(db: SQLiteDatabase?): Array<Category> {
+    fun getCategories(db: SQLiteDatabase?): ArrayList<Category> {
         val projection = arrayOf(BaseColumns._ID, category.COLUMN_NAME_TITLE)
         val resultArray = ArrayList<Category>()
         val cursor = db?.query(
@@ -81,13 +81,15 @@ class Database (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
             while (this!!.moveToNext()) {
                 val rowCategory = Category()
                 rowCategory.id = cursor?.getInt(cursor.getColumnIndexOrThrow(BaseColumns._ID))!!
-                rowCategory.title = cursor?.getString(cursor.getColumnIndexOrThrow(category.COLUMN_NAME_TITLE))!!
+                rowCategory.title =
+                    cursor?.getString(cursor.getColumnIndexOrThrow(category.COLUMN_NAME_TITLE))!!
                 resultArray.add(rowCategory)
+
             }
+
+            return resultArray
+
         }
-
-        return resultArray.toArray() as Array<Category>
-
     }
 
 }

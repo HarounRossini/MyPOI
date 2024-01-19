@@ -1,5 +1,6 @@
 package com.mypoi.category
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mypoi.R
 import database.Category
 
-class CategoryAdapter(private val dataSet: Array<Category>): RecyclerView.Adapter<CategoryAdapter.ViewHolder>(){
+class CategoryAdapter(private val dataSet: ArrayList<Category>): RecyclerView.Adapter<CategoryAdapter.ViewHolder>(){
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textView: TextView
 
@@ -27,7 +28,7 @@ class CategoryAdapter(private val dataSet: Array<Category>): RecyclerView.Adapte
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-
+        Log.d("title", dataSet[position].title)
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         viewHolder.textView.text = dataSet[position].title

@@ -12,6 +12,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.example.mypoi.databinding.ActivityMapsBinding
+import com.mypoi.category.AddCategoryActivity
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
