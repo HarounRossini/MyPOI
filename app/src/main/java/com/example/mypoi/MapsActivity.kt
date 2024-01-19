@@ -1,7 +1,9 @@
 package com.example.mypoi
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -26,6 +28,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+        findViewById<Button>(R.id.button).setOnClickListener{
+            val intent = Intent(this, AddCategoryActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {

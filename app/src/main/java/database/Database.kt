@@ -2,10 +2,11 @@ package database
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.provider.BaseColumns
-
+import android.util.Log
 
 
 const val DATABASE_VERSION = 1
@@ -23,8 +24,8 @@ class Database (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
     "CREATE TABLE ${LocationContract.Location.TABLE_NAME} (" +
             "${BaseColumns._ID} INTEGER PRIMARY KEY," +
             "${LocationContract.Location.COLUMN_NAME_TITLE} TEXT," +
-            "${LocationContract.Location.COLUMN_NAME_X} TEXT," +
-            "${LocationContract.Location.COLUMN_NAME_Y} TEXT," +
+            "${LocationContract.Location.COLUMN_NAME_X} INTEGER," +
+            "${LocationContract.Location.COLUMN_NAME_Y} INTEGER," +
             "${LocationContract.Location.COLUMN_NAME_DESCRIPTION} TEXT," +
             "${LocationContract.Location.COLUMN_NAME_CATEGORY} INTEGER)"
 
@@ -37,6 +38,7 @@ class Database (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
 
 
     override fun onCreate(db: SQLiteDatabase?) {
+        Log.d("onCreate", SQL_CREATE_CATEGORIES)
         db?.execSQL(SQL_CREATE_LOCATIONS)
         db?.execSQL(SQL_CREATE_CATEGORIES)
     }
@@ -61,6 +63,19 @@ class Database (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
         values.put(location.COLUMN_NAME_DESCRIPTION, newLoc.description)
         db?.insert(location.TABLE_NAME, null, values)
 
+    }
+
+    fun getCategories(db: SQLiteDatabase?): Cursor? {
+        val projection = arrayOf(BaseColumns._ID, category.COLUMN_NAME_TITLE)
+        return db?.query(
+            category.TABLE_NAME,
+            projection,
+            null,
+            null,
+            null,
+            null,
+            null
+        )
     }
 
 }
