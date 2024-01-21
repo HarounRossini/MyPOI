@@ -1,37 +1,29 @@
 package com.mypoi.category
 
-
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Button
-import androidx.activity.ComponentActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import android.widget.EditText
 import com.example.mypoi.R
-import com.example.mypoi.databinding.AddCategoryBinding
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import database.Category
 import database.Database
-import database.LocationContract
 
-class AddCategoryActivity : ComponentActivity() {
+class AddCategoryActivity : AppCompatActivity() {
 
-
+    private val dbHelper = Database(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(AddCategoryBinding.inflate(layoutInflater).root)
-        val dbHelper = Database(this)
         val writeDb = dbHelper.writableDatabase
-        val readDib = dbHelper.readableDatabase
-        val categories = dbHelper.getCategories(readDib)
-        val button = findViewById<Button>(R.id.addButton)
-        val categoriesList = findViewById<RecyclerView>(R.id.categoriesList)
-        val adapter = CategoryAdapter(categories)
-        categoriesList.adapter = adapter
-        val newCat = Category()
-        newCat.title = "Prova"
-        button.setOnClickListener {
+        setContentView(R.layout.activity_add_category)
+        val addButton = findViewById<FloatingActionButton>(R.id.addCategoryButton)
+        addButton.setOnClickListener {
+            val newCat: Category = Category()
+            newCat.title = findViewById<EditText>(R.id.categoryTitle).text.toString()
             dbHelper.addCategory(writeDb, newCat)
+            val intent = Intent(this, CategoryActivity::class.java)
+            startActivity(intent)
         }
+
     }
 }
-

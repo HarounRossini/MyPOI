@@ -4,15 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <EditText
+    <TextView
         android:id="@+id/nameLabel"
         android:layout_width="wrap_content"
         android:layout_height="96dp"
         android:ems="10"
         android:inputType="text"
-        android:text="Name" />
+        android:text="Nome: " />
 
-    <TextView
+    <EditText
         android:id="@+id/category_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
