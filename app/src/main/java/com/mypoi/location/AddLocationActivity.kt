@@ -18,9 +18,10 @@ class AddLocationActivity : AppCompatActivity() {
         // get categories from db
         val categories = dbHelper.getCategories(readDib)
 
+        // define spinner and its adapter to show categories
         val spinner = findViewById<Spinner>(R.id.categorySpinner)
-
-        val adapter = ArrayAdapter<Category>
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, categories.toList())
+        spinner.adapter = adapter
 
 
     }
