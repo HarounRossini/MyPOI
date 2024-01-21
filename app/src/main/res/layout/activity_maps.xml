@@ -25,4 +25,15 @@
         tools:layout_editor_absoluteX="-56dp"
         tools:layout_editor_absoluteY="-74dp" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        map:layout_constraintEnd_toEndOf="parent"
+        map:layout_constraintHorizontal_bias="0.73"
+        map:layout_constraintStart_toEndOf="@+id/button"
+        map:layout_constraintTop_toTopOf="@+id/button"
+        map:srcCompat="@android:drawable/ic_menu_add" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

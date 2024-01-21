@@ -12,7 +12,9 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.example.mypoi.databinding.ActivityMapsBinding
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.mypoi.category.AddCategoryActivity
+import com.mypoi.location.AddLocationActivity
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -29,10 +31,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+        // view category
         findViewById<Button>(R.id.button).setOnClickListener{
             val intent = Intent(this, AddCategoryActivity::class.java)
             startActivity(intent)
         }
+        // view location
+        findViewById<FloatingActionButton>(R.id.addLocation).setOnClickListener{
+            val intent = Intent(this, AddLocationActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
