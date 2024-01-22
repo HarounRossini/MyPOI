@@ -25,7 +25,7 @@ class CategoryActivity : ComponentActivity() {
         //fetching categories and populating list view
         val categories = dbHelper.getCategories(readDib)
         val categoriesList = findViewById<RecyclerView>(R.id.categoriesList)
-        val adapter = CategoryAdapter(categories)
+        val adapter = CategoryAdapter(categories, dbHelper)
         categoriesList.adapter = adapter
         Log.d("categorie", categories.toString())
         //setting up button to open AddCategoryActivity

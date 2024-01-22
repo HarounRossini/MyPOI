@@ -92,6 +92,12 @@ class Database (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
         }
     }
 
+    fun deleteCategory(db: SQLiteDatabase, id: Int){
+        db.delete(category.TABLE_NAME, BaseColumns._ID+"="+id.toString(), null)
+    }
+
+
+
 }
 
 object LocationContract {

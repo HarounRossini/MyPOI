@@ -15,7 +15,7 @@
         <activity
             android:name="com.mypoi.category.AddCategoryActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat" />
+            android:theme="@style/Theme.MyPOI" />
         <activity
             android:name="com.mypoi.category.CategoryActivity"
             android:exported="false"
