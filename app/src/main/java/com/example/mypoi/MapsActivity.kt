@@ -20,6 +20,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.mypoi.category.AddCategoryActivity
 import com.mypoi.location.AddLocationActivity
+import database.Database
 import utils.Utils
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -27,6 +28,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
     var currentLocation: Location? = null
+    val dbHelper = Database(this)
 
     @SuppressLint("MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,7 +65,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         var home = currentLocation?.let { LatLng(currentLocation!!.latitude, it.longitude ) }
         if(home == null)
             home = LatLng(45.0, 8.0)
-        home?.let { MarkerOptions().position(it).title("Casa") }?.let { mMap.addMarker(it) }
+        // home?.let { MarkerOptions().position(it).title("Casa") }?.let { mMap.addMarker(it) }
         home?.let { CameraUpdateFactory.newLatLng(it) }?.let { mMap.moveCamera(it) }
+
+        val locations = dbHelper.getLocations(dbHelper.writableDatabase)
+
+
+        for(location in locations) {
+            val position = LatLng(location.x.toDouble(), location.y.toDouble())
+            Log.d("location", location.x.toString() + location.y.toString())
+            MarkerOptions().position(position).title(location.title)
+        }
     }
 }
