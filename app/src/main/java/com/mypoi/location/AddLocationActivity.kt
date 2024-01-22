@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
+import android.location.LocationRequest
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
@@ -86,6 +87,29 @@ class AddLocationActivity : AppCompatActivity() {
         } else {
             true
         }
+    }
+
+    fun getLocalPosition(){
+        val locationRequest = LocationRequest().apply {
+            // Sets the desired interval for
+            // active location updates.
+            // This interval is inexact.
+            interval = TimeUnit.SECONDS.toMillis(60)
+
+            // Sets the fastest rate for active location updates.
+            // This interval is exact, and your application will never
+            // receive updates more frequently than this value
+            fastestInterval = TimeUnit.SECONDS.toMillis(30)
+
+            // Sets the maximum time when batched location
+            // updates are delivered. Updates may be
+            // delivered sooner than this interval
+            maxWaitTime = TimeUnit.MINUTES.toMillis(2)
+
+            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        }
+
+
     }
 
 
