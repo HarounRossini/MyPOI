@@ -74,7 +74,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         for(location in locations) {
             val position = LatLng(location.x.toDouble(), location.y.toDouble())
             Log.d("location", location.x.toString() + location.y.toString())
-            MarkerOptions().position(position).title(location.title)
+            mMap.addMarker(MarkerOptions().position(position).title(location.title))
         }
     }
 }
