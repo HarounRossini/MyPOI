@@ -1,54 +1,36 @@
 package com.mypoi.location
 
-import android.Manifest
-import android.content.pm.PackageManager
+import android.content.Intent
 import android.location.Location
-import android.location.LocationManager
-import android.location.LocationRequest
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
-import androidx.core.app.ActivityCompat
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.mypoi.R
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.location.Priority
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import database.Category
 import database.Database
+import utils.Utils
 
-class AddLocationActivity : AppCompatActivity() {
+
+class AddLocationActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     var dbHelper = Database(this)
 
     private var currentLocation: Location? = null
-
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private var categoryId: Int = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // get db
-        val writeDb = dbHelper.writableDatabase
         val readDib = dbHelper.readableDatabase
 
-        // get location
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            isLocationPermissionGranted()
-            return
-        }
-        fusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, null).addOnSuccessListener {
-            location: Location ->
-                currentLocation = location
-        }
-
-
+        currentLocation = Utils.getLocation(this, this)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_location)
@@ -57,61 +39,44 @@ class AddLocationActivity : AppCompatActivity() {
 
         // define spinner and its adapter to show categories
         val spinner = findViewById<Spinner>(R.id.categorySpinner)
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, categories.toList())
+        val adapter = ArrayAdapter<Category>(this, android.R.layout.simple_spinner_item, categories.toList())
         spinner.adapter = adapter
+        spinner.onItemSelectedListener = this
+
+        //define button
+
+        findViewById<FloatingActionButton>(R.id.saveLocation).setOnClickListener {handleAdd()}
 
         //define x and y labels
-        findViewById<TextView>(R.id.xLabel).text = currentLocation?.longitude?.toInt().toString()
-        findViewById<TextView>(R.id.xLabel).text = currentLocation?.latitude?.toInt().toString()
+        findViewById<TextView>(R.id.xLabel).text = "Latitudine: " + currentLocation?.longitude?.toInt().toString()
+        findViewById<TextView>(R.id.yLabel).text = "Longitude: " + currentLocation?.latitude?.toInt().toString()
     }
 
-    // method to check Location permissions
-    private fun isLocationPermissionGranted(): Boolean {
-        return if (ActivityCompat.checkSelfPermission(
-                this,
-                android.Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(
-                    android.Manifest.permission.ACCESS_FINE_LOCATION,
-                    android.Manifest.permission.ACCESS_COARSE_LOCATION
-                ),
-                1
-            )
-            false
-        } else {
-            true
+    private fun handleAdd(){
+        val newLoc = database.Location()
+        val writeDb = dbHelper.writableDatabase
+        if(currentLocation != null) {
+            newLoc.x = currentLocation!!.latitude.toInt()
+            newLoc.y = currentLocation!!.longitude.toInt()
+            newLoc.title = findViewById<EditText>(R.id.locationTitle).text.toString()
+            newLoc.description = findViewById<EditText>(R.id.description).text.toString()
+            newLoc.category = categoryId
+            dbHelper.addLocation(writeDb, newLoc)
         }
     }
 
-    fun getLocalPosition(){
-        val locationRequest = LocationRequest().apply {
-            // Sets the desired interval for
-            // active location updates.
-            // This interval is inexact.
-            interval = TimeUnit.SECONDS.toMillis(60)
+    override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+        val value = parent.getItemAtPosition(position) as Category
+        categoryId = value.id
+    }
 
-            // Sets the fastest rate for active location updates.
-            // This interval is exact, and your application will never
-            // receive updates more frequently than this value
-            fastestInterval = TimeUnit.SECONDS.toMillis(30)
-
-            // Sets the maximum time when batched location
-            // updates are delivered. Updates may be
-            // delivered sooner than this interval
-            maxWaitTime = TimeUnit.MINUTES.toMillis(2)
-
-            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        }
-
-
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 
 
 }
+
+
+

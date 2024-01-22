@@ -21,78 +21,108 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="0dp"
+            android:layout_marginBottom="20dp">
 
             <TextView
                 android:id="@+id/xLabel"
-                android:layout_width="214dp"
-                android:layout_height="36dp"
+                android:layout_height="match_parent"
                 android:text="" />
 
             <TextView
                 android:id="@+id/yLabel"
-                android:layout_width="201dp"
                 android:layout_height="match_parent"
                 android:text="" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="37dp">
 
-            <TextView
-                android:id="@+id/titleLabel"
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp">
+            <LinearLayout
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:id="@+id/titleLabel"
+                    android:layout_width="78dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:text="Titolo:" />
+
+                <EditText
+                    android:id="@+id/locationTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:ems="10"
+                    android:inputType="text"
+                    android:text="" />
+            </LinearLayout>
+
+        </TableRow>
+
+        <TableRow android:layout_height="40dp">
+
+        </TableRow>
+
+        <LinearLayout
+            android:orientation="horizontal">
+            <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Titolo:" />
+                android:layout_marginBottom="20dp">
 
-            <EditText
-                android:id="@+id/title"
+                <TextView
+                    android:id="@+id/descriptionLabel"
+
+                    android:layout_width="78dp"
+                    android:layout_height="match_parent"
+                    android:text="Descrizione:" />
+
+                <EditText
+                    android:id="@+id/description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ems="10"
+                    android:inputType="text"
+                    android:text="" />
+
+            </TableRow>
+
+        </LinearLayout>
+
+        <TableRow android:layout_height="40dp">
+
+        </TableRow>
+
+        <LinearLayout
+            android:orientation="horizontal">
+            <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:ems="10"
-                android:inputType="text"
-                android:text="" />
+                android:layout_marginBottom="20dp">
 
-        </TableRow>
+                <TextView
+                    android:id="@+id/categoryLabel"
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="0dp">
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Categoria:" />
 
-            <TextView
-                android:id="@+id/descriptionLabel"
+                <Spinner
+                    android:id="@+id/categorySpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </TableRow>
+        </LinearLayout>
 
-                android:layout_width="149dp"
-                android:layout_height="match_parent"
-                android:text="Descrizione:" />
-
-            <EditText
-                android:id="@+id/description"
-                android:layout_width="283dp"
-                android:layout_height="match_parent"
-                android:ems="10"
-                android:inputType="text"
-                android:text="" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="0dp">
-
-            <TextView
-                android:id="@+id/categoryLabel"
-
-                android:layout_width="149dp"
-                android:layout_height="match_parent"
-                android:text="Categoria:" />
-
-            <Spinner
-                android:id="@+id/categorySpinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </TableRow>
 
     </TableLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
