@@ -92,6 +92,48 @@ class Database (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
         }
     }
 
+    fun getLocations(db: SQLiteDatabase?): ArrayList<Location> {
+        val projection = arrayOf(BaseColumns._ID,
+            location.COLUMN_NAME_TITLE,
+            location.COLUMN_NAME_X,
+            location.COLUMN_NAME_Y,
+            location.COLUMN_NAME_DESCRIPTION,
+            location.COLUMN_NAME_CATEGORY
+        )
+        val resultArray = ArrayList<Location>()
+        val cursor = db?.query(
+            location.TABLE_NAME,
+            projection,
+            null,
+            null,
+            null,
+            null,
+            null
+        )
+        with(cursor) {
+            while (this!!.moveToNext()) {
+                val rowCategory = Location()
+                rowCategory.id = cursor?.getInt(cursor.getColumnIndexOrThrow(BaseColumns._ID))!!
+                rowCategory.title =
+                    cursor?.getString(cursor.getColumnIndexOrThrow(location.COLUMN_NAME_TITLE))!!
+                rowCategory.description =
+                    cursor?.getString(cursor.getColumnIndexOrThrow(location.COLUMN_NAME_DESCRIPTION))!!
+                rowCategory.x =
+                    cursor?.getInt(cursor.getColumnIndexOrThrow(location.COLUMN_NAME_X))!!
+                rowCategory.y =
+                    cursor?.getInt(cursor.getColumnIndexOrThrow(location.COLUMN_NAME_Y))!!
+                rowCategory.category =
+                    cursor?.getInt(cursor.getColumnIndexOrThrow(location.COLUMN_NAME_CATEGORY))!!
+
+                resultArray.add(rowCategory)
+
+            }
+
+            return resultArray
+
+        }
+    }
+
 }
 
 object LocationContract {
