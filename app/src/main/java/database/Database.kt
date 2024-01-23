@@ -9,7 +9,7 @@ import android.provider.BaseColumns
 import android.util.Log
 
 
-const val DATABASE_VERSION = 4
+const val DATABASE_VERSION = 5
 const val DATABASE_NAME = "MyPOI.db"
 
 
@@ -23,16 +23,16 @@ class Database (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
     private val SQL_CREATE_LOCATIONS =
     "CREATE TABLE ${LocationContract.Location.TABLE_NAME} (" +
             "${BaseColumns._ID} INTEGER PRIMARY KEY," +
-            "${LocationContract.Location.COLUMN_NAME_TITLE} TEXT," +
-            "${LocationContract.Location.COLUMN_NAME_X} INTEGER," +
-            "${LocationContract.Location.COLUMN_NAME_Y} INTEGER," +
+            "${LocationContract.Location.COLUMN_NAME_TITLE} TEXT NOT NULL," +
+            "${LocationContract.Location.COLUMN_NAME_X} INTEGER NOT NULL," +
+            "${LocationContract.Location.COLUMN_NAME_Y} INTEGER NOT NULL," +
             "${LocationContract.Location.COLUMN_NAME_DESCRIPTION} TEXT," +
-            "${LocationContract.Location.COLUMN_NAME_CATEGORY} INTEGER" +
+            "${LocationContract.Location.COLUMN_NAME_CATEGORY} INTEGER NOT NULL" +
             " REFERENCES ${LocationContract.Category.TABLE_NAME} (${BaseColumns._ID}))"
 
     private val SQL_CREATE_CATEGORIES = "CREATE TABLE ${LocationContract.Category.TABLE_NAME}(" +
             "${BaseColumns._ID} INTEGER PRIMARY KEY," +
-            "${LocationContract.Category.COLUMN_NAME_TITLE} TEXT)"
+            "${LocationContract.Category.COLUMN_NAME_TITLE} TEXT NOT NULL)"
 
     private val SQL_DELETE_LOCATIONS = "DROP TABLE IF EXISTS ${LocationContract.Location.TABLE_NAME}"
     private val SQL_DELETE_CATEGORIES = "DROP TABLE IF EXISTS ${LocationContract.Category.TABLE_NAME}"
