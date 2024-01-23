@@ -25,8 +25,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
-    var currentLocation: Location? = null
-    val dbHelper = Database(this)
+    private var currentLocation: Location? = null
+    private val dbHelper = Database(this)
 
     @SuppressLint("MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {

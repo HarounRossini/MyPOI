@@ -9,7 +9,7 @@ import android.provider.BaseColumns
 import android.util.Log
 
 
-const val DATABASE_VERSION = 1
+const val DATABASE_VERSION = 4
 const val DATABASE_NAME = "MyPOI.db"
 
 
@@ -27,7 +27,8 @@ class Database (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
             "${LocationContract.Location.COLUMN_NAME_X} INTEGER," +
             "${LocationContract.Location.COLUMN_NAME_Y} INTEGER," +
             "${LocationContract.Location.COLUMN_NAME_DESCRIPTION} TEXT," +
-            "${LocationContract.Location.COLUMN_NAME_CATEGORY} INTEGER)"
+            "${LocationContract.Location.COLUMN_NAME_CATEGORY} INTEGER" +
+            " REFERENCES ${LocationContract.Category.TABLE_NAME} (${BaseColumns._ID}))"
 
     private val SQL_CREATE_CATEGORIES = "CREATE TABLE ${LocationContract.Category.TABLE_NAME}(" +
             "${BaseColumns._ID} INTEGER PRIMARY KEY," +
@@ -38,14 +39,15 @@ class Database (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
 
 
     override fun onCreate(db: SQLiteDatabase?) {
-        Log.d("onCreate", SQL_CREATE_CATEGORIES)
-        db?.execSQL(SQL_CREATE_LOCATIONS)
+        Log.d("db", SQL_CREATE_LOCATIONS)
         db?.execSQL(SQL_CREATE_CATEGORIES)
+        db?.execSQL(SQL_CREATE_LOCATIONS)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, p1: Int, p2: Int) {
         db?.execSQL(SQL_DELETE_LOCATIONS)
         db?.execSQL(SQL_DELETE_CATEGORIES)
+        onCreate(db)
     }
 
     fun addCategory(db: SQLiteDatabase?, newCat: Category){

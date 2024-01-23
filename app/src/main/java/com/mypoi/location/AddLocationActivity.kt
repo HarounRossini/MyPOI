@@ -40,6 +40,11 @@ class AddLocationActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
 
         // define spinner and its adapter to show categories
         val spinner = findViewById<Spinner>(R.id.categorySpinner)
+
+        //if at least one category take first category Id as default categoryId
+        if(categories.size > 0)
+            categoryId = categories[0].id
+
         val adapter = ArrayAdapter<Category>(this, android.R.layout.simple_spinner_item, categories.toList())
         spinner.adapter = adapter
         spinner.onItemSelectedListener = this
