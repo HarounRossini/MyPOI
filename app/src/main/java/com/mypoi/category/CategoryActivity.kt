@@ -9,6 +9,7 @@ import androidx.activity.ComponentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypoi.R
 import com.example.mypoi.databinding.AddCategoryBinding
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import database.Category
 import database.Database
 
@@ -29,7 +30,7 @@ class CategoryActivity : ComponentActivity() {
         categoriesList.adapter = adapter
         Log.d("categorie", categories.toString())
         //setting up button to open AddCategoryActivity
-        val button = findViewById<Button>(R.id.addButton)
+        val button = findViewById<FloatingActionButton>(R.id.addButton)
         button.setOnClickListener {
             val intent = Intent(this, AddCategoryActivity::class.java)
             startActivity(intent)

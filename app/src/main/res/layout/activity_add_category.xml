@@ -8,35 +8,40 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addCategoryButton"
-        android:layout_width="82dp"
-        android:layout_height="65dp"
-        android:layout_marginEnd="56dp"
-        android:layout_marginBottom="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="40dp"
         android:clickable="true"
-        android:src="@android:drawable/ic_input_add"
+        android:src="@android:drawable/ic_menu_save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <TableRow
-        android:layout_width="601dp"
-        android:layout_height="503dp"
+
+    <TextView
+        android:id="@+id/titleLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:layout_marginStart="36dp"
+        android:text="Nome: "
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.499" />
 
-        <TextView
-            android:id="@+id/titleLabel"
-            android:layout_width="285dp"
-            android:layout_height="56dp"
-            android:text="Nome: " />
+    <EditText
+        android:id="@+id/categoryTitle"
+        android:layout_width="284dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="36dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="@+id/titleLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.827"
+        app:layout_constraintStart_toEndOf="@+id/titleLabel"
+        app:layout_constraintTop_toTopOf="@+id/titleLabel" />
 
-        <EditText
-            android:id="@+id/categoryTitle"
-            android:layout_width="321dp"
-            android:layout_height="95dp"
-            android:ems="10"
-            android:inputType="text"
-            android:text="" />
-    </TableRow>
 </androidx.constraintlayout.widget.ConstraintLayout>
