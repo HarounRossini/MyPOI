@@ -7,31 +7,35 @@
     android:orientation="vertical">
 
 
-    <Button
-        android:id="@+id/button"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/categories"
         android:layout_width="130dp"
         android:layout_height="58dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginBottom="32dp"
-        android:text="Button"
-        map:layout_constraintBottom_toBottomOf="parent"
-        map:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginTop="40dp"
+        android:clickable="true"
+        map:layout_constraintEnd_toEndOf="@+id/addLocation"
+        map:layout_constraintStart_toStartOf="@+id/addLocation"
+        map:layout_constraintTop_toTopOf="parent"
+        map:srcCompat="?android:attr/actionModeFindDrawable"/>
 
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="-57dp"
+        tools:layout_editor_absoluteY="-96dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="40dp"
         android:clickable="true"
+        map:layout_constraintBottom_toBottomOf="parent"
         map:layout_constraintEnd_toEndOf="parent"
-        map:layout_constraintHorizontal_bias="0.73"
-        map:layout_constraintStart_toEndOf="@+id/button"
-        map:layout_constraintTop_toTopOf="@+id/button"
-        map:srcCompat="@android:drawable/ic_menu_add" />
+        map:srcCompat="@android:drawable/ic_input_add" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

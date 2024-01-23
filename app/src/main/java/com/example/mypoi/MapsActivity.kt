@@ -43,7 +43,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         // view category
-        findViewById<Button>(R.id.button).setOnClickListener{
+        findViewById<FloatingActionButton>(R.id.categories).setOnClickListener{
             val intent = Intent(this, CategoryActivity::class.java)
             startActivity(intent)
         }

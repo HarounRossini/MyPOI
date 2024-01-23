@@ -12,6 +12,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.mypoi.MapsActivity
 import com.example.mypoi.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import database.Category
@@ -48,21 +49,22 @@ class AddLocationActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         findViewById<FloatingActionButton>(R.id.saveLocation).setOnClickListener {handleAdd()}
 
         //define x and y labels
-        findViewById<TextView>(R.id.xLabel).text = "Latitudine: " + currentLocation?.longitude?.toInt().toString()
-        findViewById<TextView>(R.id.yLabel).text = "Longitude: " + currentLocation?.latitude?.toInt().toString()
+        findViewById<TextView>(R.id.xEdit).text = currentLocation?.longitude?.toInt().toString()
+        findViewById<TextView>(R.id.yEdit).text = currentLocation?.latitude?.toInt().toString()
     }
 
     private fun handleAdd(){
         val newLoc = database.Location()
         val writeDb = dbHelper.writableDatabase
-        if(currentLocation != null) {
-            newLoc.x = currentLocation!!.latitude.toInt()
-            newLoc.y = currentLocation!!.longitude.toInt()
-            newLoc.title = findViewById<EditText>(R.id.locationTitle).text.toString()
-            newLoc.description = findViewById<EditText>(R.id.description).text.toString()
-            newLoc.category = categoryId
-            dbHelper.addLocation(writeDb, newLoc)
-        }
+        newLoc.x = findViewById<EditText>(R.id.xEdit).text.toString().toInt()
+        newLoc.y = findViewById<EditText>(R.id.yEdit).text.toString().toInt()
+        newLoc.title = findViewById<EditText>(R.id.locationTitle).text.toString()
+        newLoc.description = findViewById<EditText>(R.id.description).text.toString()
+        newLoc.category = categoryId
+        dbHelper.addLocation(writeDb, newLoc)
+
+        val intent = Intent(this, MapsActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
