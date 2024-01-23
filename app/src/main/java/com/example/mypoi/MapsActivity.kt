@@ -15,10 +15,8 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.example.mypoi.databinding.ActivityMapsBinding
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.mypoi.category.AddCategoryActivity
+import com.mypoi.category.CategoryActivity
 import com.mypoi.location.AddLocationActivity
 import database.Database
 import utils.Utils
@@ -46,7 +44,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
         // view category
         findViewById<Button>(R.id.button).setOnClickListener{
-            val intent = Intent(this, AddCategoryActivity::class.java)
+            val intent = Intent(this, CategoryActivity::class.java)
             startActivity(intent)
         }
         // view location

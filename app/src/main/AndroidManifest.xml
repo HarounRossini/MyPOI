@@ -11,7 +11,6 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyPOI"
@@ -20,12 +19,18 @@
         <activity
             android:name="com.mypoi.location.AddLocationActivity"
             android:exported="false"
-            android:label="Aggiungi Posizione"
-            android:theme="@style/Theme.AppCompat"/>
+            android:label="@string/title_activity_add_location"
+            android:theme="@style/Theme.MyPOI"/>
         <activity
             android:name="com.mypoi.category.AddCategoryActivity"
             android:exported="false"
             android:label="@string/title_activity_add_category"
+            android:theme="@style/Theme.MyPOI" />
+
+        <activity
+            android:name="com.mypoi.category.CategoryActivity"
+            android:label="@string/title_activity_category"
+            android:exported="false"
             android:theme="@style/Theme.MyPOI" />
 
         <meta-data
@@ -35,7 +40,7 @@
         <activity
             android:name=".MapsActivity"
             android:exported="true"
-            android:label="@string/title_activity_maps"
+            android:label="@string/app_name"
             android:theme="@style/Theme.AppCompat">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

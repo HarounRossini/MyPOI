@@ -134,6 +134,11 @@ class Database (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
         }
     }
 
+    fun deleteCategory(db: SQLiteDatabase?, id: Int) {
+        val sql = "DELETE FROM " + category.TABLE_NAME + " WHERE " + BaseColumns._ID + " = " + id.toString()
+        db?.execSQL(sql)
+    }
+
 }
 
 object LocationContract {

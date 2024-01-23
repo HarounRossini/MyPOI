@@ -42,6 +42,8 @@ class CategoryAdapter(private val dataSet: ArrayList<Category>, private val db: 
         // set up delete row buttons
         viewHolder.deleteButton.setOnClickListener {
             db.deleteCategory(db.writableDatabase, dataSet[position].id)
+            dataSet.removeAt(position)
+            notifyDataSetChanged()
         }
 
     }
