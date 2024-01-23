@@ -135,8 +135,18 @@ class Database (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
     }
 
     fun deleteCategory(db: SQLiteDatabase?, id: Int) {
-        val sql = "DELETE FROM " + category.TABLE_NAME + " WHERE " + BaseColumns._ID + " = " + id.toString()
-        db?.execSQL(sql)
+        //val sql = "DELETE FROM " + category.TABLE_NAME + " WHERE " + BaseColumns._ID + " = " + id.toString()
+        //db?.execSQL(sql)
+        db?.delete(category.TABLE_NAME, BaseColumns._ID + " = ?", arrayOf(id.toString()))
+    }
+
+    fun updateCategory(db: SQLiteDatabase?, updated: Category){
+        var values = ContentValues()
+        val selection = "${BaseColumns._ID} = ?"
+        val selectionArgs = arrayOf(updated.id.toString())
+
+        values.put(category.COLUMN_NAME_TITLE, updated.title)
+        db?.update(category.TABLE_NAME, values, selection, selectionArgs)
     }
 
 }

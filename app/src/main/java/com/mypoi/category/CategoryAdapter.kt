@@ -15,14 +15,15 @@ class CategoryAdapter(private val dataSet: ArrayList<Category>, private val db: 
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textView: TextView
-        lateinit var saveEditButton: FloatingActionButton
-        lateinit var deleteButton: FloatingActionButton
+        var saveEditButton: FloatingActionButton
+        var deleteButton: FloatingActionButton
 
 
         init {
             // Define click listener for the ViewHolder's View
             textView = view.findViewById(R.id.category_title)
             deleteButton = view.findViewById(R.id.deleteItemButton)
+            saveEditButton = view.findViewById(R.id.saveEditButton)
         }
     }
 
@@ -39,11 +40,20 @@ class CategoryAdapter(private val dataSet: ArrayList<Category>, private val db: 
         // contents of the view with that element
         viewHolder.textView.text = dataSet[position].title
 
-        // set up delete row buttons
+        // set up delete row button
         viewHolder.deleteButton.setOnClickListener {
             db.deleteCategory(db.writableDatabase, dataSet[position].id)
             dataSet.removeAt(position)
             notifyDataSetChanged()
+        }
+
+        //set up update row button
+        viewHolder.saveEditButton.setOnClickListener {
+            val newCategory = Category()
+            // retrieve new title
+            newCategory.title = viewHolder.textView.text.toString()
+            newCategory.id = dataSet[position].id
+            db.updateCategory(db.writableDatabase, newCategory)
         }
 
     }
