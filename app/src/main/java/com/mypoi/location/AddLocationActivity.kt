@@ -54,8 +54,8 @@ class AddLocationActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         findViewById<FloatingActionButton>(R.id.saveLocation).setOnClickListener {handleAdd()}
 
         //define x and y labels
-        findViewById<TextView>(R.id.xEdit).text = currentLocation?.longitude?.toInt().toString()
-        findViewById<TextView>(R.id.yEdit).text = currentLocation?.latitude?.toInt().toString()
+        findViewById<TextView>(R.id.xEdit).text = currentLocation?.latitude?.toInt().toString()
+        findViewById<TextView>(R.id.yEdit).text = currentLocation?.longitude?.toInt().toString()
     }
 
     private fun handleAdd(){
