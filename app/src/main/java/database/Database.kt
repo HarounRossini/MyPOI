@@ -142,6 +142,10 @@ class Database (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
         db?.delete(category.TABLE_NAME, BaseColumns._ID + " = ?", arrayOf(id.toString()))
     }
 
+    fun deleteLocation(db: SQLiteDatabase?, id: Int) {
+        db?.delete(location.TABLE_NAME, BaseColumns._ID + " = ?", arrayOf(id.toString()))
+    }
+
     fun updateCategory(db: SQLiteDatabase?, updated: Category){
         var values = ContentValues()
         val selection = "${BaseColumns._ID} = ?"
@@ -149,6 +153,10 @@ class Database (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
 
         values.put(category.COLUMN_NAME_TITLE, updated.title)
         db?.update(category.TABLE_NAME, values, selection, selectionArgs)
+    }
+
+    fun updateLocations(db: SQLiteDatabase?, updated: Location){
+
     }
 
 }
