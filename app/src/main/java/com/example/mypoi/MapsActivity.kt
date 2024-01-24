@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import androidx.appcompat.app.AlertDialog
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -15,23 +16,26 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.example.mypoi.databinding.ActivityMapsBinding
+import com.google.android.gms.maps.model.Marker
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.mypoi.category.CategoryActivity
 import com.mypoi.location.AddLocationActivity
 import database.Database
 import utils.Utils
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
     private var currentLocation: Location? = null
     private val dbHelper = Database(this)
+    private val builder: AlertDialog.Builder? = null
 
     @SuppressLint("MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
+        super.onCreate(savedInstanceState)
+        AlertDialog.Builder(this)
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
         currentLocation = Utils.getLocation(this, this)
@@ -71,8 +75,36 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         for(location in locations) {
             val position = LatLng(location.x.toDouble(), location.y.toDouble())
-            Log.d("location", position.toString())
-            mMap.addMarker(MarkerOptions().position(position).title(location.title))
+
+            val newMarker = mMap.addMarker(MarkerOptions().position(position).title(location.title))
+            newMarker?.tag = location
         }
+        mMap.setOnMarkerClickListener(this)
     }
+
+    override fun onMarkerClick(p0: Marker): Boolean {
+        val loc = p0.tag as database.Location
+        Log.d("marker", loc.title)
+        val dialog = setNewDialog()
+        if (dialog != null) {
+            dialog.show()
+        }
+        return false
+    }
+
+    private fun setNewDialog(): AlertDialog? {
+        builder
+            ?.setMessage("I am the message")
+            ?.setTitle("I am the title")
+            ?.setPositiveButton("Positive") { dialog, which ->
+                // Do something.
+            }
+            ?.setNegativeButton("Negative") { dialog, which ->
+                // Do something else.
+            }
+         return builder?.create() ?: null
+    }
+
+
+
 }
