@@ -5,39 +5,105 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/dialogTitle"
-        android:layout_width="wrap_content"
+
+    <TextView
+        android:id="@+id/titleLabel"
+        android:layout_width="264dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:ems="10"
-        android:inputType="text"
-        android:text=""
+        android:layout_marginTop="25dp"
+        android:text="Titolo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.223"
+        app:layout_constraintHorizontal_bias="0.176"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/dialogDescription"
-        android:layout_width="264dp"
-        android:layout_height="76dp"
-        android:layout_marginTop="24dp"
+        android:id="@+id/dialogTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:ems="10"
         android:inputType="text"
         android:text=""
+        app:layout_constraintEnd_toEndOf="@+id/titleLabel"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/titleLabel"
+        app:layout_constraintTop_toTopOf="@id/titleLabel" />
+
+    <TextView
+        android:id="@+id/descriptionLabel"
+        android:layout_width="264dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Descrizione"
         app:layout_constraintEnd_toEndOf="@+id/dialogTitle"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/dialogTitle"
         app:layout_constraintTop_toBottomOf="@+id/dialogTitle" />
 
-    <Spinner
-        android:id="@+id/dialogSpinner"
-        android:layout_width="216dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="24dp"
+    <EditText
+        android:id="@+id/dialogDescription"
+        android:layout_width="264dp"
+        android:layout_height="76dp"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="@+id/descriptionLabel"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/descriptionLabel"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionLabel" />
+
+    <TextView
+        android:id="@+id/categoryLabel"
+        android:layout_width="264dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Categoria"
         app:layout_constraintEnd_toEndOf="@+id/dialogDescription"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/dialogDescription"
         app:layout_constraintTop_toBottomOf="@+id/dialogDescription" />
+
+    <Spinner
+        android:id="@+id/dialogSpinner"
+        android:layout_width="216dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="@+id/categoryLabel"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/categoryLabel"
+        app:layout_constraintTop_toBottomOf="@+id/categoryLabel" />
+
+    <Button
+        android:id="@+id/dialogSaveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Salva"
+        app:layout_constraintBottom_toBottomOf="@+id/dialogDismissButton"
+        app:layout_constraintStart_toStartOf="@+id/dialogSpinner"
+        app:layout_constraintTop_toTopOf="@+id/dialogDismissButton"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/dialogDismissButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:text="Annulla"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialogSpinner" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/dialogDeleteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:clickable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/titleLabel"
+        app:srcCompat="@android:drawable/ic_delete" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
