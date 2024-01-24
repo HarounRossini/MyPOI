@@ -1,12 +1,17 @@
 package com.example.mypoi
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Intent
 import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 
@@ -22,16 +27,19 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.mypoi.category.CategoryActivity
 import com.mypoi.location.AddLocationActivity
+import database.Category
 import database.Database
 import utils.Utils
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener, AdapterView.OnItemSelectedListener {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
     private var currentLocation: Location? = null
     private val dbHelper = Database(this)
     private var builder: AlertDialog.Builder? = null
+    private var categories = ArrayList<Category>()
+    private var categoryId: Int = 0
 
     @SuppressLint("MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +51,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         currentLocation = Utils.getLocation(this, this)
         currentLocation = Utils.currentLocation
 
+        // set up categories list
+        categories = dbHelper.getCategories(dbHelper.readableDatabase)
+
+        //if at least one category take first category Id as default categoryId
+        if(categories.size > 0)
+            categoryId = categories[0].id
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
@@ -93,35 +107,38 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         return false
     }
 
-    private fun setNewDialog(p0: Marker): AlertDialog? {
+    private fun setNewDialog(p0: Marker): Dialog {
 
         val loc = p0.tag as database.Location
 
-        Log.d("marker", loc.title)
+        val inflater = layoutInflater;
 
-        builder = AlertDialog.Builder(this)
+        val dialog = Dialog(this)
 
-        builder!!.setView(R.layout.dialog)
-
-
-        builder
-            ?.setTitle("Modifica posizione")
-            ?.setPositiveButton("Positive") { dialog, which ->
-                // Do something.
-            }
-            ?.setNegativeButton("Negative") { dialog, which ->
-
-            }
-
-        val dialog = builder?.create()
+        dialog.setContentView(inflater.inflate(R.layout.dialog, null))
 
         // setting up dialog data
         dialog?.findViewById<TextView>(R.id.dialogTitle)?.text = loc.title
 
         dialog?.findViewById<TextView>(R.id.dialogDescription)?.text = loc.description
 
+        val spinner = dialog?.findViewById<Spinner>(R.id.dialogSpinner)
+
+        val adapter = ArrayAdapter<Category>(this, android.R.layout.simple_spinner_item, categories.toList())
+        spinner?.adapter = adapter
+        spinner?.onItemSelectedListener = this
+
 
         return dialog
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+        val value = parent.getItemAtPosition(position) as Category
+        categoryId = value.id
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 
