@@ -118,11 +118,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         dialog.setContentView(inflater.inflate(R.layout.dialog, null))
 
         // setting up dialog data
-        dialog?.findViewById<TextView>(R.id.dialogTitle)?.text = loc.title
+        dialog.findViewById<TextView>(R.id.dialogTitle)?.text = loc.title
 
-        dialog?.findViewById<TextView>(R.id.dialogDescription)?.text = loc.description
+        dialog.findViewById<TextView>(R.id.dialogDescription)?.text = loc.description
 
-        val spinner = dialog?.findViewById<Spinner>(R.id.dialogSpinner)
+        //setting up dialog buttons
+
+        dialog.findViewById<Button>(R.id.dialogDismissButton).setOnClickListener {
+            dialog.dismiss()
+        }
+
+        val spinner = dialog.findViewById<Spinner>(R.id.dialogSpinner)
 
         val adapter = ArrayAdapter<Category>(this, android.R.layout.simple_spinner_item, categories.toList())
         spinner?.adapter = adapter
