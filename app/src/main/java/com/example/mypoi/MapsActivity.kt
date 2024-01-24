@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -16,6 +17,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.example.mypoi.databinding.ActivityMapsBinding
+import com.example.mypoi.databinding.DialogBinding
 import com.google.android.gms.maps.model.Marker
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.mypoi.category.CategoryActivity
@@ -29,7 +31,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     private lateinit var binding: ActivityMapsBinding
     private var currentLocation: Location? = null
     private val dbHelper = Database(this)
-    private val builder: AlertDialog.Builder? = null
+    private var builder: AlertDialog.Builder? = null
 
     @SuppressLint("MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -83,26 +85,43 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     }
 
     override fun onMarkerClick(p0: Marker): Boolean {
-        val loc = p0.tag as database.Location
-        Log.d("marker", loc.title)
-        val dialog = setNewDialog()
-        if (dialog != null) {
-            dialog.show()
-        }
+
+        val dialog = setNewDialog(p0)
+
+        dialog?.show()
+
         return false
     }
 
-    private fun setNewDialog(): AlertDialog? {
+    private fun setNewDialog(p0: Marker): AlertDialog? {
+
+        val loc = p0.tag as database.Location
+
+        Log.d("marker", loc.title)
+
+        builder = AlertDialog.Builder(this)
+
+        builder!!.setView(R.layout.dialog)
+
+
         builder
-            ?.setMessage("I am the message")
-            ?.setTitle("I am the title")
+            ?.setTitle("Modifica posizione")
             ?.setPositiveButton("Positive") { dialog, which ->
                 // Do something.
             }
             ?.setNegativeButton("Negative") { dialog, which ->
-                // Do something else.
+
             }
-         return builder?.create() ?: null
+
+        val dialog = builder?.create()
+
+        // setting up dialog data
+        dialog?.findViewById<TextView>(R.id.dialogTitle)?.text = loc.title
+
+        dialog?.findViewById<TextView>(R.id.dialogDescription)?.text = loc.description
+
+
+        return dialog
     }
 
 
