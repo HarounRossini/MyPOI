@@ -6,15 +6,12 @@ import android.content.Intent
 import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
-
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -22,7 +19,6 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.example.mypoi.databinding.ActivityMapsBinding
-import com.example.mypoi.databinding.DialogBinding
 import com.google.android.gms.maps.model.Marker
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.mypoi.category.CategoryActivity
@@ -37,7 +33,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     private lateinit var binding: ActivityMapsBinding
     private var currentLocation: Location? = null
     private val dbHelper = Database(this)
-    private var builder: AlertDialog.Builder? = null
     private var categories = ArrayList<Category>()
     private var categoryId: Int = 0
 
@@ -45,7 +40,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        AlertDialog.Builder(this)
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
         currentLocation = Utils.getLocation(this, this)
@@ -128,6 +122,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
         description.text = loc.description
 
+        // setting up spinner
+        val spinner = dialog.findViewById<Spinner>(R.id.dialogSpinner)
+
+        // selected category get moved on top of the array to be shown as default in the spinner
+        val adapter = ArrayAdapter<Category>(this, android.R.layout.simple_spinner_item, moveCategoryOnTop(categories, loc.category).toList())
+        spinner?.adapter = adapter
+        spinner?.onItemSelectedListener = this
+
         //setting up dialog buttons
 
         dialog.findViewById<Button>(R.id.dialogDismissButton).setOnClickListener {
@@ -135,17 +137,25 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         }
 
         dialog.findViewById<Button>(R.id.dialogSaveButton).setOnClickListener {
-            val newLoc = loc
-            newLoc.title = title.text.toString()
-            newLoc.description = description.text.toString()
-            newLoc.category = categoryId
+            loc.title = title.text.toString()
+            loc.description = description.text.toString()
+            loc.category = categoryId
+            // new data get saved as marker tag
+            p0.tag = loc
+            // db call
+            dbHelper.updateLocations(dbHelper.writableDatabase, loc)
+            // close dialog
+            dialog.dismiss()
         }
 
-        val spinner = dialog.findViewById<Spinner>(R.id.dialogSpinner)
-
-        val adapter = ArrayAdapter<Category>(this, android.R.layout.simple_spinner_item, moveCategoryOnTop(categories, loc.category).toList())
-        spinner?.adapter = adapter
-        spinner?.onItemSelectedListener = this
+        dialog.findViewById<FloatingActionButton>(R.id.dialogDeleteButton).setOnClickListener{
+            // remove marker
+            p0.remove()
+            // db call
+            dbHelper.deleteLocation(dbHelper.writableDatabase, loc.id)
+            // close dialog
+            dialog.dismiss()
+        }
 
 
         return dialog
