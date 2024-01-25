@@ -9,7 +9,7 @@ import android.provider.BaseColumns
 import android.util.Log
 
 
-const val DATABASE_VERSION = 5
+const val DATABASE_VERSION = 6
 const val DATABASE_NAME = "MyPOI.db"
 
 
@@ -24,8 +24,8 @@ class Database (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
     "CREATE TABLE ${LocationContract.Location.TABLE_NAME} (" +
             "${BaseColumns._ID} INTEGER PRIMARY KEY," +
             "${LocationContract.Location.COLUMN_NAME_TITLE} TEXT NOT NULL," +
-            "${LocationContract.Location.COLUMN_NAME_X} INTEGER NOT NULL," +
-            "${LocationContract.Location.COLUMN_NAME_Y} INTEGER NOT NULL," +
+            "${LocationContract.Location.COLUMN_NAME_X} REAL NOT NULL," +
+            "${LocationContract.Location.COLUMN_NAME_Y} REAL NOT NULL," +
             "${LocationContract.Location.COLUMN_NAME_DESCRIPTION} TEXT," +
             "${LocationContract.Location.COLUMN_NAME_CATEGORY} INTEGER NOT NULL" +
             " REFERENCES ${LocationContract.Category.TABLE_NAME} (${BaseColumns._ID}))"
@@ -121,9 +121,9 @@ class Database (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
                 rowCategory.description =
                     cursor?.getString(cursor.getColumnIndexOrThrow(location.COLUMN_NAME_DESCRIPTION))!!
                 rowCategory.x =
-                    cursor?.getInt(cursor.getColumnIndexOrThrow(location.COLUMN_NAME_X))!!
+                    cursor?.getFloat(cursor.getColumnIndexOrThrow(location.COLUMN_NAME_X))!!
                 rowCategory.y =
-                    cursor?.getInt(cursor.getColumnIndexOrThrow(location.COLUMN_NAME_Y))!!
+                    cursor?.getFloat(cursor.getColumnIndexOrThrow(location.COLUMN_NAME_Y))!!
                 rowCategory.category =
                     cursor?.getInt(cursor.getColumnIndexOrThrow(location.COLUMN_NAME_CATEGORY))!!
 

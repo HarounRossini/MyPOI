@@ -52,15 +52,15 @@ class AddLocationActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         findViewById<FloatingActionButton>(R.id.saveLocation).setOnClickListener {handleAdd()}
 
         //define x and y labels
-        findViewById<TextView>(R.id.xEdit).text = currentLocation?.latitude?.toInt().toString()
-        findViewById<TextView>(R.id.yEdit).text = currentLocation?.longitude?.toInt().toString()
+        findViewById<TextView>(R.id.xEdit).text = currentLocation?.latitude?.toFloat().toString()
+        findViewById<TextView>(R.id.yEdit).text = currentLocation?.longitude?.toFloat().toString()
     }
 
     private fun handleAdd(){
         val newLoc = database.Location()
         val writeDb = dbHelper.writableDatabase
-        newLoc.x = findViewById<EditText>(R.id.xEdit).text.toString().toInt()
-        newLoc.y = findViewById<EditText>(R.id.yEdit).text.toString().toInt()
+        newLoc.x = findViewById<EditText>(R.id.xEdit).text.toString().toFloat()
+        newLoc.y = findViewById<EditText>(R.id.yEdit).text.toString().toFloat()
         newLoc.title = findViewById<EditText>(R.id.locationTitle).text.toString()
         newLoc.description = findViewById<EditText>(R.id.description).text.toString()
         newLoc.category = categoryId

@@ -111,7 +111,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
         val dialog = setNewDialog(p0)
 
-        dialog?.show()
+        dialog.show()
 
         return false
     }

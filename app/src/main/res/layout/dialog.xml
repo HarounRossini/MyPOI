@@ -80,22 +80,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
         android:text="Annulla"
         app:layout_constraintBottom_toBottomOf="@+id/dialogSaveButton"
         app:layout_constraintStart_toStartOf="@+id/dialogSpinner"
         app:layout_constraintTop_toTopOf="@+id/dialogSaveButton"
- />
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/dialogSaveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="32dp"
         android:text="Salva"
-        app:layout_constraintVertical_bias="0.0"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialogSpinner"/>
+        app:layout_constraintTop_toBottomOf="@+id/dialogSpinner" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/dialogDeleteButton"
