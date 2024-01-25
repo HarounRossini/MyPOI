@@ -76,9 +76,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         currentLocation = Utils.currentLocation
         // Add a marker in Sydney and move the camera
         var home = currentLocation?.let { LatLng(currentLocation!!.latitude, it.longitude ) }
+        // if current location is not defined set default Uninsubria Monte Generoso
         if(home == null)
-            home = LatLng(45.0, 8.0)
-        // home?.let { MarkerOptions().position(it).title("Casa") }?.let { mMap.addMarker(it) }
+            home = LatLng(45.79, 8.85)
         home?.let { CameraUpdateFactory.newLatLng(it) }?.let { mMap.moveCamera(it) }
 
         val locations = dbHelper.getLocations(dbHelper.writableDatabase)
