@@ -12,6 +12,8 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat.startActivity
 import com.example.mypoi.R
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -27,6 +29,7 @@ import com.mypoi.location.AddLocationActivity
 import database.Category
 import database.Database
 import utils.Utils
+import kotlin.system.exitProcess
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener, AdapterView.OnItemSelectedListener {
 
@@ -67,6 +70,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             val intent = Intent(this, AddLocationActivity::class.java)
             startActivity(intent)
         }
+        // custom back button to close applications
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                MapsActivity().finish()
+
+                exitProcess(0)
+            }
+        })
 
     }
 
@@ -183,6 +194,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     override fun onNothingSelected(parent: AdapterView<*>?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
 
 
 
