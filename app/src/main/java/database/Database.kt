@@ -147,7 +147,7 @@ class Database (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
     }
 
     fun updateCategory(db: SQLiteDatabase?, updated: Category){
-        var values = ContentValues()
+        val values = ContentValues()
         val selection = "${BaseColumns._ID} = ?"
         val selectionArgs = arrayOf(updated.id.toString())
 
@@ -156,7 +156,15 @@ class Database (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
     }
 
     fun updateLocations(db: SQLiteDatabase?, updated: Location){
+        val values = ContentValues()
+        val selection = "${BaseColumns._ID} = ?"
+        val selectionArgs = arrayOf(updated.id.toString())
 
+        values.put(location.COLUMN_NAME_TITLE, updated.title)
+        values.put(location.COLUMN_NAME_DESCRIPTION, updated.description)
+        values.put(location.COLUMN_NAME_CATEGORY, updated.category)
+
+        db?.update(location.TABLE_NAME, values, selection, selectionArgs)
     }
 
 }

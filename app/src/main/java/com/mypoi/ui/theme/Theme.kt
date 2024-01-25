@@ -1,4 +1,4 @@
-package com.example.mypoi.ui.theme
+package com.mypoi.ui.theme
 
 import android.app.Activity
 import android.os.Build
