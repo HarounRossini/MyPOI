@@ -22,6 +22,8 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.example.mypoi.databinding.ActivityMapsBinding
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.Marker
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.mypoi.category.CategoryActivity
@@ -94,11 +96,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
         val locations = dbHelper.getLocations(dbHelper.writableDatabase)
 
-
+        // populate map using locations data from db
         for(location in locations) {
             val position = LatLng(location.x.toDouble(), location.y.toDouble())
 
-            val newMarker = mMap.addMarker(MarkerOptions().position(position).title(location.title))
+            val newMarker = mMap.addMarker(MarkerOptions().
+            position(position).title(location.title).icon(markerColor(location.category)))
             newMarker?.tag = location
         }
         mMap.setOnMarkerClickListener(this)
@@ -154,6 +157,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             loc.category = categoryId
             // new data get saved as marker tag
             p0.tag = loc
+            // marker gets its category color
+            p0.setIcon(markerColor(loc.category))
             // db call
             dbHelper.updateLocations(dbHelper.writableDatabase, loc)
             // close dialog
@@ -195,6 +200,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    // map 10 different colors starting from an Id
+    fun markerColor(id: Int): BitmapDescriptor {
+
+        val normalized = id%10 + 1
+
+        return BitmapDescriptorFactory.defaultMarker((normalized * 36).toFloat())
+
+    }
 
 
 
