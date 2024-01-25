@@ -8,7 +8,7 @@ import android.widget.Button
 import androidx.activity.ComponentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypoi.R
-import com.example.mypoi.databinding.AddCategoryBinding
+import com.example.mypoi.databinding.ActivityCategoryBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import database.Category
 import database.Database
@@ -18,7 +18,7 @@ class CategoryActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(AddCategoryBinding.inflate(layoutInflater).root)
+        setContentView(ActivityCategoryBinding.inflate(layoutInflater).root)
         // defining database utils
         val dbHelper = Database(this)
         val writeDb = dbHelper.writableDatabase

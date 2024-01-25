@@ -3,14 +3,12 @@ package com.mypoi.location
 import android.content.Intent
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mypoi.main.MapsActivity
 import com.example.mypoi.R
@@ -34,7 +32,7 @@ class AddLocationActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         currentLocation = Utils.getLocation(this, this)
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.add_location)
+        setContentView(R.layout.activity_add_location)
         // get categories from db
         val categories = dbHelper.getCategories(readDib)
 
