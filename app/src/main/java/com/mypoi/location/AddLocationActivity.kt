@@ -12,7 +12,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.mypoi.MapsActivity
+import com.mypoi.main.MapsActivity
 import com.example.mypoi.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import database.Category

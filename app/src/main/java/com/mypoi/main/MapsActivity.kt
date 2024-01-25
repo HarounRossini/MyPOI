@@ -1,4 +1,4 @@
-package com.example.mypoi
+package com.mypoi.main
 
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
+import com.example.mypoi.R
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
