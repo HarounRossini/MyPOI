@@ -111,6 +111,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
         val loc = p0.tag as database.Location
 
+        categoryId = loc.category
+
         val inflater = layoutInflater;
 
         val dialog = Dialog(this)
@@ -118,9 +120,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         dialog.setContentView(inflater.inflate(R.layout.dialog, null))
 
         // setting up dialog data
-        dialog.findViewById<TextView>(R.id.dialogTitle)?.text = loc.title
+        val title = dialog.findViewById<TextView>(R.id.dialogTitle)
 
-        dialog.findViewById<TextView>(R.id.dialogDescription)?.text = loc.description
+        title.text = loc.title
+
+        val description = dialog.findViewById<TextView>(R.id.dialogDescription)
+
+        description.text = loc.description
 
         //setting up dialog buttons
 
@@ -128,14 +134,34 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             dialog.dismiss()
         }
 
+        dialog.findViewById<Button>(R.id.dialogSaveButton).setOnClickListener {
+            val newLoc = loc
+            newLoc.title = title.text.toString()
+            newLoc.description = description.text.toString()
+            newLoc.category = categoryId
+        }
+
         val spinner = dialog.findViewById<Spinner>(R.id.dialogSpinner)
 
-        val adapter = ArrayAdapter<Category>(this, android.R.layout.simple_spinner_item, categories.toList())
+        val adapter = ArrayAdapter<Category>(this, android.R.layout.simple_spinner_item, moveCategoryOnTop(categories, loc.category).toList())
         spinner?.adapter = adapter
         spinner?.onItemSelectedListener = this
 
 
         return dialog
+    }
+
+    // method that moves selected category on top of categories array
+    private fun moveCategoryOnTop (array: ArrayList<Category>, categoryId: Int): ArrayList<Category> {
+        for (category in array){
+            if(category.id == categoryId){
+                array.remove(category)
+                array.add(0, category)
+                break
+            }
+        }
+
+        return array
     }
 
     override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
